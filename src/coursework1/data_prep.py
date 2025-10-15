@@ -13,4 +13,3 @@ flat_prices_df = pd.concat(
     ignore_index = True
 )
 pd.set_option("display.max_columns", None)
-sdrgfsrgt
