@@ -1,5 +1,7 @@
 import pandas as pd
 from pathlib import Path
+import matplotlib.pyplot as plt
+
 
 def describe_df(df):
     """Describes a dataframe by printing its: shape, 1st and last 5 rows, column labels, column data types, info and pd describe
@@ -31,11 +33,24 @@ def check_data_quality(df):
     
         """
     total_missing_values = df.isnull().sum().sum()
-    print(total_missing_values)
+    missing_rows = df[df.isna().any(axis = 1)]
+    print(missing_rows)
+
+
+
+
+def plots(df):
+    columns = ["participants_m" , "participants_f"]
+    df[columns].hist()
+    plt.show()
+
+
+
 if __name__ == '__main__':
     data_file_raw =  Path(__file__).parent.parent.joinpath('data','paralympics_raw.csv')
     data_file_allraw = Path(__file__).parent.parent.joinpath('data','paralympics_all_raw.xlsx')
     raw_df = pd.read_csv(data_file_raw)
     all_raw_df1 =pd.read_excel(data_file_allraw)
     all_raw_df2 = pd.read_excel(data_file_allraw, sheet_name=1)
-    check_data_quality(raw_df)
+    all_raw_df = pd.concat([all_raw_df1, all_raw_df2])
+    plots(raw_df)
